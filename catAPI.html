@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h5 style="margin: 20px; text-align: center;">FETCHING RANDOM CAT IMAGES</h5>
+    <p id="errorMess"></p>
+    <img src="" alt="" id="catImage" style="height: 500px; width: 500px; display: block; margin: 0 auto;">
+    <button id="btn" style="display: block; padding: 20px; margin: 0 auto; background-color: tomato; color: white; border: transparent; width: 300px; margin-top: 20px;">Searching For a Cat</button>
+
+
+
+
+    <script>
+        const imgCat = document.querySelector('img')
+        const b = document.querySelector('button')
+
+
+        const headers = new Headers({
+  "Content-Type": "application/json",
+  "x-api-key": "live_tPeoEaaXLysdHDUhzyXidULlcvCimA5b7zTdqCZZBu6Nkqs63s5lOFn8HgltRVqk" // Replace with your actual API key
+})
+
+
+function getCat(){
+
+    fetch('https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1')
+    .then(res => res.json())
+    .then(data => {
+        imgCat.src = data[0].url
+        const breedInfo = data[0].height
+        console.log(breedInfo)
+    })
+    .catch(error => {
+        document.getElementById('errorMess').innerHTML = error
+    })
+}
+
+b.addEventListener('click', getCat)
+    </script>
+</body>
+</html>
